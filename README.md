@@ -1,4 +1,4 @@
-# <div align='center'>github:varnoxblacklord/baileys</div>
+# <div align='center'>github:blacklorddev15/baileys</div>
 <div align='center'>
   <img src="https://files.catbox.moe/rhuggz.jpg"></img>
 </div>
@@ -8,8 +8,8 @@
 ## Usage
 ```json
 "depencies": {
-  "varnoxblacklord/baileys": "github:varnoxblacklord/baileys"
-  // or "@whiskeysocket/baileys": "github:varnoxblacklord/baileys"
+  "blacklorddev/baileys": "github:blacklorddev15/baileys"
+  // or "@whiskeysocket/baileys": "github:blacklorddev15/baileys"
 }
 ```
 ## Import
@@ -17,7 +17,7 @@
 const {
   default: makeWASocket,
   // Other functionz
-} = require('varnoxblacklord/baileys');
+} = require('blacklorddev/baileys');
 ```
 
 ---
@@ -27,7 +27,7 @@ const {
 const {
   default: makeWASocket,
   Browsers
-} = require('varnoxblacklord/baileys');
+} = require('blacklorddev/baileys');
 
 const client = makeWASocket({
   browser: Browsers.ubuntu('Chrome'),
@@ -41,7 +41,7 @@ const {
   default: makeWASocket,
   fetchLatestWAWebVersion,
   Browsers
-} = require('varnoxblacklord/baileys');
+} = require('blacklorddev/baileys');
 
 const client = makeWASocket({
   browser: Browsers.ubuntu('Chrome'),
@@ -62,7 +62,7 @@ console.log("Ur pairing code : " + code)
 const {
   default: makeWASocket,
   makeInMemoryStore
-} = require('varnoxblacklord/baileys');
+} = require('blacklorddev/baileys');
 const pino = require('pino');
 
 const store = makeInMemoryStore({

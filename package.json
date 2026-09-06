@@ -1,5 +1,5 @@
 {
-  "name": "varnoxblacklord/baileys",
+  "name": "blacklorddev/baileys",
   "type": "module",
   "version": "0.0.1",
   "description": "A WebSockets library for interacting with WhatsApp Web",
@@ -16,9 +16,9 @@
     "wa bot",
     "whatsapp bot"
   ],
-  "homepage": "https://github.com/varnoxblacklord/baileys",
+  "homepage": "https://github.com/blacklorddev15/baileys",
   "repository": {
-    "url": "https://github.com/varnoxblacklord/baileys"
+    "url": "https://github.com/blacklorddev15/baileys"
   },
   "license": "MIT",
   "author": "Rajeh Taher - Xcoursed",
@@ -30,19 +30,19 @@
     "engine-requirements.js"
   ],
   "scripts": {
-      "build:all": "tsc && typedoc",
-      "build:docs": "typedoc",
-      "build:tsc": "tsc",
-      "changelog:last": "conventional-changelog -p angular -r 2",
-      "changelog:preview": "conventional-changelog -p angular -u",
-      "gen:protobuf": "sh WAProto/GenerateStatics.sh",
-      "lint": "eslint src --ext .js,.ts,.jsx,.tsx",
-      "lint:fix": "eslint src --fix --ext .js,.ts,.jsx,.tsx",
-      "prepack": "",
-      "prepare": "",
-      "preinstall": "node ./engine-requirements.js",
-      "release": "release-it",
-      "test": "jest"
+    "build:all": "tsc && typedoc",
+    "build:docs": "typedoc",
+    "build:tsc": "tsc",
+    "changelog:last": "conventional-changelog -p angular -r 2",
+    "changelog:preview": "conventional-changelog -p angular -u",
+    "gen:protobuf": "sh WAProto/GenerateStatics.sh",
+    "lint": "eslint src --ext .js,.ts,.jsx,.tsx",
+    "lint:fix": "eslint src --fix --ext .js,.ts,.jsx,.tsx",
+    "prepack": "",
+    "prepare": "",
+    "preinstall": "node ./engine-requirements.js",
+    "release": "release-it",
+    "test": "jest"
   },
   "dependencies": {
     "@cacheable/node-cache": "^1.4.0",
