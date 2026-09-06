@@ -126,30 +126,32 @@ await client.sendMessage(m.chat, {
 });
 // headerType is mapped automatically (IMAGE / VIDEO / DOCUMENT / LOCATION)
 ```
-### 3) Full control (raw buttonsMessage via generated content)
+### 3) Full control — native-flow quick_reply (CLICKABLE)
+Legacy raw `buttonsMessage` is NOT clickable on current WhatsApp — use native flow instead:
 ```javascript
-const msg = generateWAMessageFromContent(m.chat, {
-  buttonsMessage: {
-    contentText: "Raw buttonsMessage",
-    footerText: "footer",
-    headerType: 1, // 1 = EMPTY
-    buttons: [{ buttonId: "x", buttonText: { displayText: "X" }, type: 1 }]
+await client.sendMessage(m.chat, {
+  interactiveMessage: {
+    nativeFlowMessage: {
+      buttons: [
+        { name: "quick_reply", buttonParamsJson: JSON.stringify({ display_text: "✅ Yes", id: "yes" }) },
+        { name: "quick_reply", buttonParamsJson: JSON.stringify({ display_text: "❌ No",  id: "no"  }) }
+      ],
+      messageParamsJson: "",
+      messageVersion: 1
+    },
+    body: { text: "Choose one:" },
+    footer: { text: "footer" }
   }
-}, { userJid: client.user.id });
-
-await client.relayMessage(m.chat, msg.message, { messageId: msg.key.id });
+});
 ```
 ### 4) Read which button the user pressed
 ```javascript
 client.ev.on("messages.upsert", async ({ messages }) => {
   const msg = messages[0];
-  if (!msg.message) return;
-  const type = getContentType(msg.message); // "buttonsResponseMessage" | "interactiveResponseMessage" | ...
-  if (type === "buttonsResponseMessage") {
-    console.log("pressed:", msg.message.buttonsResponseMessage.selectedButtonId);
-  } else if (type === "interactiveResponseMessage") {
-    console.log("pressed:", msg.message.interactiveResponseMessage.nativeFlowResponseMessage?.name);
-  }
+  const resp = msg?.message?.interactiveResponseMessage?.nativeFlowResponseMessage;
+  if (!resp) return;
+  const data = JSON.parse(resp.paramsJson || "{}");
+  console.log("pressed:", data.id, "|", data.display_text); // id = "yes" / "no"
 });
 ```
 ## send orderMessage
