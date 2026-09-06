@@ -93,6 +93,65 @@ await client.sendMessage(m.chat, {
   participant: true
 })
 ```
+## Confirmed: Buttons (blacklorddev/baileys)
+Everything button-related is already exported from the package root — no deep imports needed.
+```javascript
+const {
+  default: makeWASocket,
+  proto,            // full protobuf: proto.Message.ButtonsMessage / InteractiveMessage / ...
+  getContentType,   // detect the kind of a received message
+  generateWAMessageFromContent,
+  downloadMediaMessage
+} = require('blacklorddev/baileys');
+```
+### 1) Quick buttons (auto-converted to buttonsMessage)
+```javascript
+await client.sendMessage(m.chat, {
+  text: "Choose one:",
+  footer: "7eppsynC",
+  buttons: [
+    { buttonId: "yes", buttonText: { displayText: "✅ Yes" }, type: 1 },
+    { buttonId: "no",  buttonText: { displayText: "❌ No"  }, type: 1 }
+  ]
+});
+// converter auto-sets Button.Type.RESPONSE (lib/Utils/messages.js:484)
+```
+### 2) Buttons with a media header (image / video / document / location)
+```javascript
+await client.sendMessage(m.chat, {
+  image: { url: "https://example.com/a.jpg" }, // or video / document / location
+  caption: "Which one?",
+  footer: "menu",
+  buttons: [{ buttonId: "a", buttonText: { displayText: "A" }, type: 1 }]
+});
+// headerType is mapped automatically (IMAGE / VIDEO / DOCUMENT / LOCATION)
+```
+### 3) Full control (raw buttonsMessage via generated content)
+```javascript
+const msg = generateWAMessageFromContent(m.chat, {
+  buttonsMessage: {
+    contentText: "Raw buttonsMessage",
+    footerText: "footer",
+    headerType: 1, // 1 = EMPTY
+    buttons: [{ buttonId: "x", buttonText: { displayText: "X" }, type: 1 }]
+  }
+}, { userJid: client.user.id });
+
+await client.relayMessage(m.chat, msg.message, { messageId: msg.key.id });
+```
+### 4) Read which button the user pressed
+```javascript
+client.ev.on("messages.upsert", async ({ messages }) => {
+  const msg = messages[0];
+  if (!msg.message) return;
+  const type = getContentType(msg.message); // "buttonsResponseMessage" | "interactiveResponseMessage" | ...
+  if (type === "buttonsResponseMessage") {
+    console.log("pressed:", msg.message.buttonsResponseMessage.selectedButtonId);
+  } else if (type === "interactiveResponseMessage") {
+    console.log("pressed:", msg.message.interactiveResponseMessage.nativeFlowResponseMessage?.name);
+  }
+});
+```
 ## send orderMessage
 ```javascript
 const fs = require('fs');
